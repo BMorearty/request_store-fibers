@@ -43,6 +43,10 @@ Or install it yourself as:
 
     $ gem install request_store-fibers
 
+Note that you still need the `request_store` gem. `request_store-fibers` is not
+a fork or a rewrite of `request_store`. It’s a hook that lets you use the existing
+`request_store` with fibers.
+
 ## Usage
 
 Make an initializer that does this:
@@ -56,6 +60,9 @@ If you ever need to unhook fiber creation, here’s how:
 ```ruby
 RequestStore::Fibers.uninit
 ```
+
+In your app, whenever you need to access the request store, you just do it
+the way you always did: by referencing `RequestStore`.
 
 ## Development
 
