@@ -9,7 +9,7 @@ module RequestStore
   module Fibers
     class Error < StandardError; end
 
-    def self.hook_up
+    def self.init
       @hook_id = Fiber.hook(
         new: -> { [RequestStore.store, RequestStore.active?] },
         resume: ->(value) {
@@ -23,8 +23,8 @@ module RequestStore
       )
     end
 
-    def self.unhook
-      raise Error, "You must hook before you can unhook" unless @hook_id
+    def self.uninit
+      raise Error, "You must init before you can uninit" unless @hook_id
 
       Fiber.unhook(@hook_id)
       @hook_id = nil

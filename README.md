@@ -48,13 +48,13 @@ Or install it yourself as:
 Make an initializer that does this:
 
 ```ruby
-RequestStore::Fibers.hook_up
+RequestStore::Fibers.init
 ```
 
 If you ever need to unhook fiber creation, here’s how:
 
 ```ruby
-RequestStore::Fibers.unhook
+RequestStore::Fibers.uninit
 ```
 
 ## Development

@@ -5,21 +5,21 @@ RSpec.describe RequestStore::Fibers do
     expect(RequestStore::Fibers::VERSION).not_to be nil
   end
 
-  describe "#hook" do
+  describe "#init" do
     it "passes RequestStore thread-locals to child fibers" do
-      RequestStore::Fibers.hook_up
+      RequestStore::Fibers.init
       RequestStore.store = { donald: "duck" }
       result = Fiber.new { RequestStore.store[:donald] }.resume
       expect(result).to eq("duck")
     ensure
-      RequestStore::Fibers.unhook
+      RequestStore::Fibers.uninit
     end
   end
 
-  describe "unhook" do
+  describe "#uninit" do
     it "no longer passes RequestStore thread-locals to child fibers" do
-      RequestStore::Fibers.hook_up
-      RequestStore::Fibers.unhook
+      RequestStore::Fibers.init
+      RequestStore::Fibers.uninit
       RequestStore.store = { donald: "duck" }
       result = Fiber.new { RequestStore.store[:donald] }.resume
       expect(result).to be_nil
